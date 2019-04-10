@@ -15,7 +15,9 @@
 // });
 
 require('should');
-const test = require('../src/app')
+const DatabaseAdditions = require('../src/Database/DatabaseAdditions')
+const DatabaseCheck = require('../src/Database/DatabaseCheck')
+const DatabaseRemovals = require('../src/Database/DatabaseRemovals')
 
 let newUser
 let newLink
@@ -24,51 +26,51 @@ let newComment
 describe('LinkDump:DatabaseAdditions', function () {
   describe('#newUser()', function () {
     it('Creates a new user', async function () {
-      newUser = await test.newUser()
-      let testValue = await test.userExists(newUser)
+      newUser = await DatabaseAdditions.newUser()
+      let testValue = await DatabaseCheck.userExists(newUser)
       testValue.should.be.true();
     })
   })
 
   describe('#newLink()', function () {
     it('Creates a new link', async function () {
-      newLink = await test.newLink(newUser, "Test", "test")
-      let testValue = await test.linkExists(newLink)
+      newLink = await DatabaseAdditions.newLink(newUser, "Test", "test")
+      let testValue = await DatabaseCheck.linkExists(newLink)
       testValue.should.be.true()
     })
   })
 
   describe('#newComment()', function () {
     it('Creates a new comment', async function () {
-      newComment = await test.newComment(newUser, newLink, "test")
-      let testValue = await test.commentExists(newComment)
+      newComment = await DatabaseAdditions.newComment(newUser, newLink, "test")
+      let testValue = await DatabaseCheck.commentExists(newComment)
       testValue.should.be.true()
     })
   })
 })
 
 describe('LinkDump:DatabaseRemovals', function () {
-  describe('#newUser()', function () {
-    it('Creates a new user', async function () {
-      await test.removeUser(newUser)
-      let testValue = await test.userExists(newUser)
-      testValue.should.not.be.true();
+  describe('#removeUser()', function () {
+    it('Removes a user', async function () {
+      await DatabaseRemovals.removeUser(newUser)
+      let testValue = await DatabaseCheck.userExists(newUser)
+      testValue.should.be.false();
     })
   })
 
-  describe('#newLink()', function () {
-    it('Creates a new link', async function () {
-      await test.removeLink(newLink)
-      let testValue = await test.linkExists(newLink)
-      testValue.should.not.be.true()
+  describe('#removeLink()', function () {
+    it('Removes a link', async function () {
+      await DatabaseRemovals.removeLink(newLink)
+      let testValue = await DatabaseCheck.linkExists(newLink)
+      testValue.should.be.false()
     })
   })
 
-  describe('#newComment()', function () {
-    it('Creates a new comment', async function () {
-      await test.removeComment(newComment)
-      let testValue = await test.commentExists(newComment)
-      testValue.should.not.be.true()
+  describe('#removeComment()', function () {
+    it('Removes a comment', async function () {
+      await DatabaseRemovals.removeComment(newComment)
+      let testValue = await DatabaseCheck.commentExists(newComment)
+      testValue.should.be.false()
     })
   })
 })
