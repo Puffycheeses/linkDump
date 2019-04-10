@@ -1,0 +1,20 @@
+{
+  "name": "linkDump",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./src/app.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "debug": "^4.1.0",
+    "mongoose": "^5.4.21",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "uuid": "latest"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "should": "^13.2.3"
+  }
+}
