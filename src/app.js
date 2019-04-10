@@ -6,17 +6,6 @@
 
 const debug = require('debug')('LinkDump:Main')
 
-
-
-
-
-module.exports = {
-  newUser: newUser,
-  newLink: newLink,
-  newComment: newComment,
-  userExists: userExists,
-  linkExists: linkExists,
-  commentExists: commentExists
-}
+// Client & Server interaction should go here
 
 debug("Reached the documents bottom!")
