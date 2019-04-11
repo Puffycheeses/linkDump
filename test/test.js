@@ -26,7 +26,7 @@ let newComment
 describe('LinkDump:DatabaseAdditions', function () {
   describe('#newUser()', function () {
     it('Creates a new user', async function () {
-      newUser = await DatabaseAdditions.newUser()
+      newUser = await DatabaseAdditions.newUser().unique
       let testValue = await DatabaseCheck.userExists(newUser)
       testValue.should.be.true();
     })

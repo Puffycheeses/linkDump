@@ -14,8 +14,13 @@ async function commentExists (uCid) {
   return await privateFunc.comment.countDocuments({ uCid: uCid }) > 0
 }
 
+async function checkCookies (cookies) {
+  return await privateFunc.user.countDocuments({$and: [{uUid:cookies.uUid},{sUid:cookies.sUid}]}) > 0
+}
+
 module.exports = {
   userExists: userExists,
   linkExists: linkExists,
-  commentExists: commentExists
+  commentExists: commentExists,
+  checkCookies: checkCookies
 }
