@@ -1,0 +1,66 @@
+.logo {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 2em;
+    margin: auto;
+}
+
+.info {
+    color: black;
+    font-size: 0.5em;
+    width: 100%;
+    height: 0.5em;
+    line-height: 0.5em;
+    margin: auto;
+    padding: 2em;
+    text-align: center;
+}
+
+.hide {
+    background-color: black;
+    transition: background-color 0.5s linear;
+}
+
+.hide:hover {
+    background-color: white;
+}
+
+.input {
+    text-align: right;
+    margin: auto;
+}
+
+.inputField {
+    border-bottom-color: #6c757d;
+}
+
+.inputTitle {
+    border-bottom-left-radius: 0;
+}
+
+.identity {
+    border-top-width: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.posts {
+    width: 100%;
+    margin: auto;
+    padding: 2em;
+    text-align: center;
+}
+
+.viewButton {
+    width: 95%;
+}
+
+.userID {
+    font-size: 0.5em;
+}
+
+.post {
+    margin-top: 2em;
+    width: 75%;
+}

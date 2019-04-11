@@ -5,9 +5,10 @@
 */
 
 const debug = require('debug')('LinkDump:DatabaseGet')
+const privateFunc = require("../Private/Private")
 
 async function getUserData (uUid) {
-  return await user.findOne({ uUid: uUid })
+  return await privateFunc.user.findOne({ uUid: uUid })
 }
 
 async function getPost (getBy, value = false) {
@@ -15,13 +16,13 @@ async function getPost (getBy, value = false) {
   if (!getTypes.includes(getBy)) { return false }
   switch (getBy) {
     case "all":
-      return await link.find()
+      return await privateFunc.link.find().sort('-created_at').limit(10)
     case "uPid":
-      return await link.find({ uPid:value })
+      return await privateFunc.link.find({ uPid:value })
     case "uUid":
-      return await link.find({ uUid:value })
+      return await privateFunc.link.find({ uUid:value })
     case "pre":
-      return await link.find({ pre:value })
+      return await privateFunc.link.find({ pre:value })
     default:
       debug("oh lawd")
       return false // This should never be called ever

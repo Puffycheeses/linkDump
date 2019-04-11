@@ -1,14 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Link Dump</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    aaa
+<div class="container">
+    <div class="row">
+        <div class="logo">
+            Link Dump
+        </div>
+        <div class="info">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group input">
+            <div class="input-group">
+                <input type="text" class="inputField inputTitle form-control" id="postTitle" placeholder="Title">
+                <input type="text" class="inputField form-control" id="postLink" aria-describedby="linkHelp" placeholder="Link">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary submitButton" onclick="newLink()" type="button">Submit</button>
+                </div>
+                    <button onclick="genNewUser()" class="btn btn-outline-secondary identity w-100">New identity</button>
+            </div>
+            <small id="linkHelp" class="form-text text-muted">Please ensure this content does not break our Terms of Service</small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="posts">
+
+        </div>
+    </div>
+</div>
 </body>
 </html>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.slim.js"></script>
-<script>
-  let socket = io();
-</script>
+<footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.slim.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.slim.min.js"></script>
+    <script>
+      let socket = io();
+
+      function genNewUser () {
+        socket.emit('newUser')
+      }
+
+      function refreshPosts () {
+        console.log('asking for posts')
+        socket.emit('getPosts')
+      }
+
+      socket.on('gotPosts', function (data) {
+        data.forEach(post => {
+          console.log(`appending ${post.uPid}`)
+          $('.posts').append(`
+          <div class="card post" style="width: 100%;">
+                <div class="card-body">
+                    <h5 class="card-title">${post.title}<br><small class="form-text text-muted userID">${post.uPid} by ${post.user}</small></h5>
+                    <a class="btn btn-outline-secondary viewButton" target="_blank"  href="${post.link}" >Visit</a>
+                    <small class="form-text text-muted">${post.link}</small>
+                </div>
+            </div>
+          `)
+        })
+        console.log('Got Posts')
+      })
+
+      function displayUserData() {
+        $('.info').html(`<span class="hide"><b>uUid:</b> ${Cookies.get('uUid')} - <b>sUid:</b> ${Cookies.get('sUid')}</span>`)
+      }
+
+      socket.on('userDetails', function(data) {
+        Cookies.set('uUid', data.unique);
+        Cookies.set('sUid', data.Sunique)
+        displayUserData()
+      })
+
+      function newLink() {
+        let PostObject = {
+          title: $('#postTitle').val(),
+          link: $('#postLink').val()
+        }
+        let cookieObject = {
+          uUid: Cookies.get('uUid'),
+          sUid: Cookies.get('sUid')
+        }
+
+        socket.emit('newLink', {post: PostObject, cookie: cookieObject})
+      }
+
+      displayUserData()
+      refreshPosts()
+    </script>
+</footer>
